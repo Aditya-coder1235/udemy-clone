@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+
+.b{
+    border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+button{
+    cursor: pointer !important;
+}
