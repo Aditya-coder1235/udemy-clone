@@ -9,6 +9,8 @@ const CreateCourse = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const[image,setImage]=useState(null )
+    const [video, setVideo] = useState(null);
+
 
     async function createCourses(e){
         e.preventDefault()
@@ -20,6 +22,8 @@ const CreateCourse = () => {
             formData.append("description", description);
             formData.append("price", price);
             formData.append("image", image);
+            formData.append("video", video);
+
 
             let res = await axios.post(
                 "http://localhost:8080/api/course/createCourse",
@@ -90,6 +94,20 @@ const CreateCourse = () => {
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
                         accept="image/*"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-1">
+                        Upload Video
+                    </label>
+                    <input
+                        type="file"
+                        placeholder="Upload Video"
+                        onChange={(e) => setVideo(e.target.files[0])}
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                        accept="video/*"
                     />
                 </div>
 

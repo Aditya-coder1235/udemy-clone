@@ -1,38 +1,32 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
-const CourseCard = ({  _id,title, description, price ,image}) => {
-
-    const navigate=useNavigate()
-
-     const imageUrl =  `http://localhost:8080${image}`
+const CourseCard = ({ _id, title, description, price, image }) => {
+    const navigate = useNavigate();
+    const imageUrl = `http://localhost:8080${image}`;
 
     return (
         <div
             onClick={() => navigate(`/course/${_id}`)}
-            className="w-70 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden cursor-pointer"
+            className="bg-white rounded-2xl shadow hover:shadow-xl transition cursor-pointer overflow-hidden"
         >
             <img
                 src={imageUrl}
-                alt="course"
-                className="h-36 w-full object-cover"
+                alt={title}
+                className="h-40 w-full object-cover"
             />
 
             <div className="p-4 space-y-2">
-                <h4 className="text-lg font-semibold text-gray-800 line-clamp-1">
-                    {title}
-                </h4>
+                <h3 className="text-lg font-semibold line-clamp-1">{title}</h3>
 
                 <p className="text-sm text-gray-600 line-clamp-2">
                     {description}
                 </p>
 
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                    <span>@username</span>
-                    <span>⭐⭐⭐⭐⭐</span>
+                <div className="flex justify-between items-center text-sm text-gray-500">
+                    <span>⭐ 4.8</span>
+                    <span className="font-bold text-purple-600">₹{price}</span>
                 </div>
-
-                <h5 className="text-lg font-bold text-blue-600">₹{price}</h5>
             </div>
         </div>
     );

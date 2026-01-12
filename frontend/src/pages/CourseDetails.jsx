@@ -20,16 +20,17 @@ const CourseDetails = () => {
 
     async function deleteCourse() {
         try {
-            let res = await axios.delete(
-                `http://localhost:8080/api/course/deleteCourse/${id}`
+            await axios.delete(
+                `http://localhost:8080/api/course/deleteCourse/${id}`,
+                { withCredentials: true }
             );
-            // console.log(res.data)
-            setCourse(null);
             navigate("/");
         } catch (err) {
-            console.error(err);
+            console.error(err.response?.data || err.message);
+            alert("Not authorized to delete course");
         }
     }
+
 
     // useEffect(()=>{
     //     const getRatings = async () => {
@@ -115,7 +116,12 @@ const CourseDetails = () => {
 
                             <div className="flex gap-3">
                                 {role === "user" && (
-                                    <button className="bg-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-purple-700 transition cursor-pointer" onClick={()=>dispatch(addToCart(course))}>
+                                    <button
+                                        className="bg-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-purple-700 transition cursor-pointer"
+                                        onClick={() =>
+                                            dispatch(addToCart(course))
+                                        }
+                                    >
                                         Enroll Now
                                     </button>
                                 )}
@@ -164,10 +170,11 @@ const CourseDetails = () => {
                             onChange={(e) => setComment(e.target.value)}
                             className="border rounded h-18"
                         ></textarea>
-
-                        <button className="border bg-blue-600 w-25 mb-5 rounded text-white">
-                            Add Rating
-                        </button>
+                        {role && (
+                            <button className="border bg-blue-600 w-25 mb-5 rounded text-white">
+                                Add Rating
+                            </button>
+                        )}
                     </form>
                     <hr />
                     <h2>All reviews</h2>

@@ -5,7 +5,17 @@ const authMiddleware = require('../middleware/authMiddleware')
 const upload = require('../middleware/upload')
 const authorizeRoles = require('../middleware/roleMiddleware')
 
-router.post('/createCourse', authorizeRoles("admin"), upload.single("image"), authMiddleware, createCourse)
+router.post(
+    '/createCourse',
+    authMiddleware,
+    authorizeRoles("admin"),
+    upload.fields([
+        { name: 'image', maxCount: 1 },
+        { name: 'video', maxCount: 1 }
+    ]),
+    createCourse
+);
+
 router.get('/getAllCourses', getAllCourse)
 router.get('/getCourse/:id', getCourseById);
 router.delete('/deleteCourse/:id', authMiddleware, authorizeRoles("admin"), deleteCoursebyId)

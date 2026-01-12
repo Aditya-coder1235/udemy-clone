@@ -1,24 +1,30 @@
-const multer=require('multer')
+const multer = require('multer')
+const fs = require('fs')
+const path = require('path');
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "uploads/")
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname)
-    }
-})
+    destination: function (req, file, cb) {
+        let uploadPath = 'uploads'
 
- const upload = multer({
-    storage,
-    limits: { fileSize: 2 * 1024 * 1024 }, 
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype.startsWith("image/")) {
-            cb(null, true)
-        } else {
-            cb(new Error("Only images allowed"))
+        if (file.mimetype.startsWith('image')) {
+            uploadPath = 'uploads/image'
+        } else if (file.mimetype.startsWith('video')) {
+            uploadPath = 'uploads/video'
         }
+
+        if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, { recursive: true })
+        }
+
+        cb(null, uploadPath)
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname)
     }
 })
 
-module.exports=upload
+const upload = multer({
+    storage
+})
+
+module.exports = upload

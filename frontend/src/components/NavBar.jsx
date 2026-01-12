@@ -1,62 +1,57 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
-    let navigate=useNavigate()
+    const navigate = useNavigate();
+    const role = localStorage.getItem("role");
 
-    async function logoutUser(){
-        let res = await axios.post("http://localhost:8080/api/auth/logout",{},{withCredentials:true});
-    }
-
-    const handleLogout=async()=>{
-        try{
-            await logoutUser()
-            localStorage.removeItem('role')
-            alert('you logout')
-            navigate('/')
-
-
-        }catch(err){
-            console.error(err)
+    const handleLogout = async () => {
+        try {
+            await axios.post(
+                "http://localhost:8080/api/auth/logout",
+                {},
+                { withCredentials: true }
+            );
+            localStorage.removeItem("role");
+            navigate("/");
+        } catch (err) {
+            console.error(err);
         }
-    }
-
-    const role=localStorage.getItem('role')
+    };
 
     return (
-        <div className="flex items-center gap-20 b h-20 fixed top-0 w-full bg-white">
-            <div className="ms-14">
-                <a href="/">
-                    <img src="/logo-udemy.svg" alt="" className="h-18 w-20" />
-                </a>
-            </div>
-            <div>
+        <header className="fixed top-0 w-full bg-white shadow z-50">
+            <div className="max-w-7xl mx-auto h-18 flex items-center justify-between px-6">
+                <Link to="/">
+                    <img src="/logo-udemy.svg" alt="logo" className="h-8" />
+                </Link>
+
                 <input
-                    type="text"
-                    name=""
-                    id=""
                     placeholder="Search for anything"
-                    className="border w-90 h-10 rounded-2xl text-center"
+                    className="hidden md:block border px-4 py-2 rounded-full w-96"
                 />
+
+                <nav className="flex gap-6 items-center">
+                    <Link to="/">Home</Link>
+                    {role && <Link to="/mycourses">My Courses</Link>}
+                    {role === "admin" && (
+                        <Link to="/createCourses">Create</Link>
+                    )}
+
+                    {!role && <Link to="/login">Login</Link>}
+                    {!role && <Link to="/register">Register</Link>}
+
+                    {role && (
+                        <button
+                            onClick={handleLogout}
+                            className="bg-purple-600 text-white px-4 py-1 rounded hover:bg-purple-700"
+                        >
+                            Logout
+                        </button>
+                    )}
+                </nav>
             </div>
-            <nav className="flex gap-7 ms-40">
-                <Link to={"/"}>Home</Link>
-                <Link to={"/mycourses"}>MyCourses</Link>
-                <Link to={"/createCourses"}>CreateCourse</Link>
-                {!role && <Link to={"/register"}>Register</Link>}
-                {!role && <Link to={"/login"}>Login</Link>}
-                {role && (
-                    <button
-                        onClick={handleLogout}
-                        className="cursor-pointer bg-purple-600 px-2 py-1 rounded hover:bg-purple-700 transition ms-5"
-                    >
-                        Logout
-                    </button>
-                )}
-            </nav>
-        </div>
+        </header>
     );
 };
 
