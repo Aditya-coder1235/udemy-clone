@@ -8,25 +8,21 @@ const CourseCard = ({ _id, title, description, price, image }) => {
     return (
         <div
             onClick={() => navigate(`/course/${_id}`)}
-            className="bg-white rounded-2xl shadow hover:shadow-xl transition cursor-pointer overflow-hidden"
+            className="bg-white rounded-xl shadow hover:shadow-xl transition cursor-pointer overflow-hidden
+                       w-full sm:w-60 h-auto sm:h-60"
         >
             <img
                 src={imageUrl}
                 alt={title}
-                className="h-40 w-full object-cover"
+                className="h-40 sm:h-35 w-full object-cover"
             />
 
-            <div className="p-4 space-y-2">
+            <div className="p-3 space-y-2">
                 <h3 className="text-lg font-semibold line-clamp-1">{title}</h3>
 
                 <p className="text-sm text-gray-600 line-clamp-2">
                     {description}
                 </p>
-
-                <div className="flex justify-between items-center text-sm text-gray-500">
-                    <span>⭐ 4.8</span>
-                    <span className="font-bold text-purple-600">₹{price}</span>
-                </div>
             </div>
         </div>
     );

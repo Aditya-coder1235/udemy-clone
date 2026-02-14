@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+body{
+    overflow-x: hidden;
+}
 
 .b{
     border-bottom: 1px solid rgb(179, 179, 179);
@@ -7,4 +10,16 @@
 
 button{
     cursor: pointer !important;
+}
+
+.bord{
+    border: 1px solid gray;
+}
+
+.bg{
+    background-color: #515151;
+}
+
+.bgg{
+    background-color: #E4E4E4;
 }

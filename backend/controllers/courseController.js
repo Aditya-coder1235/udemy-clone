@@ -32,6 +32,24 @@ exports.createCourse = async (req, res) => {
     }
 };
 
+exports.getCourseUsingInput=async(req,res)=>{
+    try {
+        const { q } = req.query;
+
+        if (!q) {
+            return res.status(400).json({ message: "Search query is required" });
+        }
+
+        const courses = await Course.find({
+            title: { $regex: q, $options: "i" } 
+        });
+
+        res.status(200).json({ success: true, courses });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
 
 exports.getAllCourse=async(req,res)=>{
     const courses=await Course.find({})

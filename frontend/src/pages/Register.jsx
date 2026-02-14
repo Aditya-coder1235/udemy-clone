@@ -9,44 +9,44 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const[error,setError]=useState("")
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            let res = await axios.post(
+              await axios.post(
                 "http://localhost:8080/api/auth/register",
                 { name, email, password }
             );
 
-            alert("User Created!");
+            // alert("User Created!");
             setName("");
             setEmail("");
 
             navigate("/login");
         } catch (error) {
             console.log(error.response?.data);
-            alert("Error creating user");
+            // alert("Error creating user");
+            setError(error.response?.data.message);
+
         }
     };
 
     return (
-        <div className="mt-20 flex justify-center items-center min-h-screen  py-10">
-            <div className="w-full max-w-md  shadow-xl rounded-2xl p-8 border">
-                <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">
+        <div className=" flex justify-center md:items-center min-h-screen  py-10">
+            <div className="w-full max-w-md  md:shadow-xl md:rounded-2xl p-8 md:border">
+                <h2 className="text-3xl font-bold text-center text-green-700 mb-6">
                     Create Your Account
                 </h2>
 
-                <p className="text-center  mb-8">
-                    Join our learning community
-                </p>
+                <p className="text-center  mb-8">Join our learning community</p>
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div>
-                        <label className="block t font-medium mb-1">
-                            Name
-                        </label>
+                        <label className="block t font-medium mb-1">Name</label>
                         <input
                             type="text"
                             placeholder="e.g. John Doe"
-                            className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-green-500"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
@@ -59,7 +59,7 @@ const Register = () => {
                         <input
                             type="email"
                             placeholder="you@example.com"
-                            className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-green-500"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
@@ -73,16 +73,19 @@ const Register = () => {
                         <input
                             type="password"
                             placeholder="••••••••"
-                            className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-green-500"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                     </div>
+                    {error && (
+                        <p className="text-red-600 font-normal">{error}</p>
+                    )}
 
                     <button
                         type="submit"
-                        className="w-full bg-purple-700 text-white py-3 rounded-lg text-lg font-semibold hover:bg-purple-800 transition"
+                        className="w-full bg-green-700 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-800 transition"
                     >
                         Create Account
                     </button>
@@ -90,7 +93,7 @@ const Register = () => {
                         Already have an account?{" "}
                         <a
                             href="/login"
-                            className="text-purple-700 font-semibold hover:underline"
+                            className="text-green-700 font-semibold hover:underline"
                         >
                             Login
                         </a>

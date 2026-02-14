@@ -6,7 +6,7 @@ const cors=require('cors')
 const cookieParser=require('cookie-parser');
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
-
+const Razorpay=require('razorpay')
 
 
 let port=process.env.PORT
@@ -34,6 +34,8 @@ main().then(()=>console.log("Connect to mongodb!!"));
 const authRoutes = require("./routes/auth.route.js")
 const courseRoute=require('./routes/course.route.js')
 const reviewRoute=require('./routes/reviews.route.js');
+const paymentRoutes =require('./routes/payment.Routes.js')
+const userRouter=require('./routes/user.route.js');
 const User = require('./models/userSchema.js');
 
 app.get('/',async (req, res) => {
@@ -62,6 +64,10 @@ app.get('/',async (req, res) => {
 app.use('/api/auth',authRoutes);
 app.use('/api/course',courseRoute)
 app.use('/api/reviews',reviewRoute)
+app.use("/api/payment", paymentRoutes);
+app.use("/api/user", userRouter);
+
+
 
 
 

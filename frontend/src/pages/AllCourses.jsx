@@ -1,34 +1,55 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CourseCard from "../components/CourseCard";
+import { useSelector } from "react-redux";
 
 const AllCourses = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const searchText = useSelector((state) => state.search.searchText);
+
     useEffect(() => {
-        axios
-            .get("http://localhost:8080/api/course/getAllCourses")
-            .then((res) => setCourses(res.data))
-            .catch(console.error)
-            .finally(() => setLoading(false));
-    }, []);
+        const fetchCourses = async () => {
+            try {
+                setLoading(true);
+
+                const url = searchText
+                    ? `http://localhost:8080/api/course/search?q=${searchText}`
+                    : `http://localhost:8080/api/course/getAllCourses`;
+
+                const res = await axios.get(url);
+                setCourses(searchText ? res.data.courses : res.data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const timer = setTimeout(fetchCourses, 400);
+        return () => clearTimeout(timer);
+    }, [searchText]);
 
     if (loading) return <p className="mt-32 text-center">Loading...</p>;
 
+    // let user=localStorage.getItem("name")
+
     return (
         <>
-            <div className="bg-linear-to-r from-teal-300 to-teal-500 py-12 px-6 mt-15">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-700 text-center">
-                    Explore Courses
-                </h1>
-            </div>
+            <h2 className="text-center text-3xl font-bold pt-10 pb-5">BROWSE COURSES</h2>
             <div className="mt-8 max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    {courses.map((course) => (
-                        <CourseCard key={course._id} {...course} />
-                    ))}
-                </div>
+                {courses.length === 0 ? (
+                    <p className="text-center text-gray-500">
+                        No courses found
+                    </p>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        {courses.map((course) => (
+                            <CourseCard key={course._id} {...course} />
+                        ))}
+                    </div>
+                )}
             </div>
         </>
     );

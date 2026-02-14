@@ -1,5 +1,5 @@
 const express = require('express')
-const { createCourse, getAllCourse, getCourseById, deleteCoursebyId, updateCourseById } = require('../controllers/courseController')
+const { createCourse, getAllCourse, getCourseById, deleteCoursebyId, updateCourseById, getCourseUsingInput } = require('../controllers/courseController')
 const router = express.Router()
 const authMiddleware = require('../middleware/authMiddleware')
 const upload = require('../middleware/upload')
@@ -26,6 +26,8 @@ router.put(
     upload.single("image"),
     updateCourseById
 )
+
+router.get('/search',getCourseUsingInput)
 
 
 

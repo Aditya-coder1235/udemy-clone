@@ -2,18 +2,24 @@ import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 
-import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import MyCourses from "./pages/MyCourses";
+import Cart from "./pages/Cart";
 import CreateCourse from "./pages/CreateCourse";
-import CourseDetails from "./pages/CourseDetails";
+// import CourseDetails from "./pages/CourseDetails";
 import UpdateCourse from "./pages/UpdateCourse";
 import VideoOfTheCourse from "./pages/VideoOfTheCourse";
 import Unauthorized from "./pages/Unauthorized";
 import ErrorPage from "./pages/ErrorPage";
 
 import { ProtectedRoute } from "./pages/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import CourseInDetail from "./pages/CourseInDetail";
+import Services from "./pages/Services";
+import ContactUs from "./pages/ContactUs";
+import AllCourses from "./pages/AllCourses";
+import ProtectedRoutes from "./pages/ProtectedRoutes";
+import AfterEnrolled from "./pages/AfterEnrolled";
 
 function App() {
     return (
@@ -21,17 +27,27 @@ function App() {
             <NavBar />
 
             <Routes>
-                <Route path="/" element={<Index />} />
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/service" element={<Services />} />
+                <Route path="/enroll" element={<AfterEnrolled />} />
+
+                <Route element={<ProtectedRoutes />}>
+                    <Route path="/contact" element={<ContactUs />} />
+                    <Route path="/allCourses" element={<AllCourses />} />
+                    <Route path="/course/:id" element={<CourseInDetail />} />
+                </Route>
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/course/:id" element={<CourseDetails />} />
+                {/* <Route path="/course/:id" element={<CourseDetails />} /> */}
+
                 <Route path="/video/:id" element={<VideoOfTheCourse />} />
 
                 <Route
                     path="/mycourses"
                     element={
                         <ProtectedRoute roles={["user", "admin"]}>
-                            <MyCourses />
+                            <Cart />
                         </ProtectedRoute>
                     }
                 />
