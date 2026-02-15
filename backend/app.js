@@ -9,12 +9,12 @@ let port = process.env.PORT || 8080;
 let url = process.env.URI;
 
 app.use(express.json());
-// app.use(cors({
-//     origin: "http://localhost:5173",
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE"]
-// }));
-app.use(cors())
+app.use(cors({
+    origin: "https://udemy-clone2003.vercel.app",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
+}));
+// app.use(cors())
 app.use(cookieParser());
 
 app.use("/uploads", express.static("uploads"));
