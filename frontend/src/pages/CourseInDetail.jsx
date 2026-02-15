@@ -17,7 +17,7 @@ const CourseInDetail = () => {
     const fetchCourse = async () => {
         try {
             const res = await axios.get(
-                `http://localhost:8080/api/course/getCourse/${id}`,
+                `https://udemy-clone-ujno.onrender.com/api/course/getCourse/${id}`,
                 { withCredentials: true },
             );
             setCourse(res.data);
@@ -37,7 +37,7 @@ const CourseInDetail = () => {
 
         try {
             await axios.post(
-                `http://localhost:8080/api/reviews/create/${id}`,
+                `https://udemy-clone-ujno.onrender.com/api/reviews/create/${id}`,
                 {
                     comment,
                     rating,
@@ -56,7 +56,7 @@ const CourseInDetail = () => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
-    const imageUrl = `http://localhost:8080${course.image}`;
+    // const imageUrl = `http://localhost:8080${course.image}`;
 
     let userId = localStorage.getItem("userId");
 
@@ -67,7 +67,7 @@ const CourseInDetail = () => {
 
         try {
             let res = await axios.delete(
-                `http://localhost:8080/api/reviews/delete/${id}`,
+                `https://udemy-clone-ujno.onrender.com/api/reviews/delete/${id}`,
                 { withCredentials: true },
             );
             // console.log(res.data)
@@ -86,7 +86,7 @@ const CourseInDetail = () => {
         }
 
         const orderRes = await axios.post(
-            "http://localhost:8080/api/payment/create-order",
+            "https://udemy-clone-ujno.onrender.com/api/payment/create-order",
             { courseId: course._id },
             { withCredentials: true },
         );
@@ -102,7 +102,7 @@ const CourseInDetail = () => {
             order_id: order.id,
             handler: async function (response) {
                 await axios.post(
-                    "http://localhost:8080/api/payment/verify-payment",
+                    "https://udemy-clone-ujno.onrender.com/api/payment/verify-payment",
                     {
                         ...response,
                         courseId: course._id,
@@ -124,11 +124,11 @@ const CourseInDetail = () => {
 
 
     return (
-        <div>
+        <div className="pb-5 pt-2">
             <div className="min-h-screen flex flex-col md:flex-row gap-6 w-[90%] md:w-[80%] mx-auto">
-                <div className="w-full md:w-[67%] pt-6 md:pt-10">
+                <div className="w-full md:w-[67%] md:pt-10">
                     <img
-                        src={imageUrl}
+                        src={course.image}
                         alt={course.title}
                         className="w-full h-60 md:h-96 object-cover rounded"
                     />
@@ -163,7 +163,6 @@ const CourseInDetail = () => {
                     >
                         Enroll Now
                     </button>
-
                 </div>
             </div>
 

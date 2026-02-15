@@ -39,7 +39,8 @@ const Dashboard = () => {
                         className="
                 mt-
                 font-medium
-                text-[8px]
+                text-[6px]
+                md:text-[18px]
                 ms-2
                 md:relative md:top-22 md:left-20 md:text-base
             "
@@ -56,11 +57,14 @@ const Dashboard = () => {
                                 : () => navigate("/login")
                         }
                         className="
-        mt-2
+        md:mt-2
+        mt-4
         ms-2
         w-fit
+        text-[10px]
         bg-green-400
-        px-3 py-2 text-sm
+        px-2 py-1
+        md:px-3 md:py-2 text-sm
         rounded font-medium
         md:relative md:top-30 md:left-20 md:p-4 md:text-base
     "

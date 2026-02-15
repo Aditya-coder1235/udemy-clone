@@ -15,8 +15,9 @@ const Login = () => {
         e.preventDefault();
         try {
             let res = await axios.post(
-                "http://localhost:8080/api/auth/login",
-                { email, password },{withCredentials:true}
+                "https://udemy-clone-ujno.onrender.com/api/auth/login",
+                { email, password },
+                { withCredentials: true },
             );
             console.log(res.data)
 

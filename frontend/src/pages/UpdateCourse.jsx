@@ -19,7 +19,11 @@ const UpdateCourse = () => {
         formData.append("price", price);
         formData.append("image", image);
 
-        let res = await axios.put(`http://localhost:8080/api/course/update/${id}`,formData,{withCredentials:true});
+        let res = await axios.put(
+            `https://udemy-clone-ujno.onrender.com/api/course/update/${id}`,
+            formData,
+            { withCredentials: true },
+        );
     }
 
     const handleSubmit=async(e)=>{

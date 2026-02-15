@@ -15,8 +15,8 @@ const AllCourses = () => {
                 setLoading(true);
 
                 const url = searchText
-                    ? `http://localhost:8080/api/course/search?q=${searchText}`
-                    : `http://localhost:8080/api/course/getAllCourses`;
+                    ? `https://udemy-clone-ujno.onrender.com/api/course/search?q=${searchText}`
+                    : `https://udemy-clone-ujno.onrender.com/api/course/getAllCourses`;
 
                 const res = await axios.get(url);
                 setCourses(searchText ? res.data.courses : res.data);
@@ -34,9 +34,10 @@ const AllCourses = () => {
     if (loading) return <p className="mt-32 text-center">Loading...</p>;
 
     // let user=localStorage.getItem("name")
+    console.log(courses)
 
     return (
-        <>
+        <div className="pb-5">
             <h2 className="text-center text-3xl font-bold pt-10 pb-5">BROWSE COURSES</h2>
             <div className="mt-8 max-w-7xl mx-auto px-6">
                 {courses.length === 0 ? (
@@ -51,7 +52,7 @@ const AllCourses = () => {
                     </div>
                 )}
             </div>
-        </>
+        </div>
     );
 };
 

@@ -13,7 +13,7 @@ const VideoOfTheCourse = () => {
         async function fetchCourse() {
             try {
                 let res = await axios.get(
-                    `http://localhost:8080/api/course/getCourse/${id}`
+                    `https://udemy-clone-ujno.onrender.com/api/course/getCourse/${id}`,
                 );
                 // console.log(res.data);
                 setCourse(res.data);

@@ -15,9 +15,9 @@ const Register = () => {
         e.preventDefault();
         try {
               await axios.post(
-                "http://localhost:8080/api/auth/register",
-                { name, email, password }
-            );
+                  "https://udemy-clone-ujno.onrender.com/api/auth/register",
+                  { name, email, password },
+              );
 
             // alert("User Created!");
             setName("");

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const CourseCard = ({ _id, title, description, price, image }) => {
     const navigate = useNavigate();
-    const imageUrl = `http://localhost:8080${image}`;
+    // const imageUrl = `http://localhost:8080${image}`;
 
     return (
         <div
@@ -12,7 +12,7 @@ const CourseCard = ({ _id, title, description, price, image }) => {
                        w-full sm:w-60 h-auto sm:h-60"
         >
             <img
-                src={imageUrl}
+                src={image}
                 alt={title}
                 className="h-40 sm:h-35 w-full object-cover"
             />

@@ -9,7 +9,7 @@ const Cart = () => {
     async function fetchUser() {
         try {
             let res = await axios.get(
-                `http://localhost:8080/api/user/enrolledCourse/${userId}`,
+                `https://udemy-clone-ujno.onrender.com/api/user/enrolledCourse/${userId}`,
                 { withCredentials: true },
             );
             setCourse(res.data.user.buyCourses);
@@ -31,7 +31,7 @@ const Cart = () => {
     }
 
     return (
-        <div className="w-[90%] md:w-[80%] mx-auto mt-10">
+        <div className="w-[90%] md:w-[80%] mx-auto pt-5 pb-5">
             <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">
                 My Enrolled Courses
             </h1>
@@ -44,7 +44,7 @@ const Cart = () => {
                             className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
                         >
                             <img
-                                src={`http://localhost:8080${course.image}`}
+                                src={course.image}
                                 alt=""
                                 className="w-full h-40 md:h-48 object-cover"
                             />

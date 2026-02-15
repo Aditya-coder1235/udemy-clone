@@ -15,7 +15,7 @@ const NavBar = () => {
     const handleLogout = async () => {
         try {
             await axios.post(
-                "http://localhost:8080/api/auth/logout",
+                "https://udemy-clone-ujno.onrender.com/api/auth/logout",
                 {},
                 { withCredentials: true },
             );
@@ -28,7 +28,7 @@ const NavBar = () => {
 
     return (
         <header className="top-0 w-full bg-white shadow z-50">
-            <div className="max-w-7xl mx-auto flex  md:flex-row items-center gap-12 md:gap-30 px-4 md:px-6 py-3 md:py-0">
+            <div className="max-w-7xl mx-auto flex  md:flex-row items-center gap-7 md:gap-30 px-4 md:px-6 py-3 md:py-0">
                 {/* Logo */}
                 <Link to="/">
                     <img
@@ -59,7 +59,7 @@ const NavBar = () => {
     md:flex-wrap 
     justify-start 
     md:justify-center 
-    gap-3
+    gap-2
     md:gap-9 
     items-center 
     overflow-x-auto 
@@ -86,7 +86,7 @@ const NavBar = () => {
                         Contact Us
                     </Link>
 
-                    {role && (
+                    {role!=='admin' && role==='user' && (
                         <Link
                             to="/mycourses"
                             className="shrink-0 text-[10px] md:text-[18px]"
@@ -125,7 +125,7 @@ const NavBar = () => {
                     {role && (
                         <button
                             onClick={handleLogout}
-                            className="shrink-0 px-1 py-  bg-green-500 text-white md:px-4 md:py-1 rounded hover:bg-green-700"
+                            className="shrink-0 px-1 text-[12px] md:text-[18px] py-1  bg-green-500 text-white md:px-4 md:py-1 rounded hover:bg-green-700"
                         >
                             Logout
                         </button>

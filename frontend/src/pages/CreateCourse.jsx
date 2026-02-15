@@ -9,7 +9,6 @@ const CreateCourse = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const[image,setImage]=useState(null )
-    const [video, setVideo] = useState(null);
 
 
     async function createCourses(e){
@@ -22,16 +21,15 @@ const CreateCourse = () => {
             formData.append("description", description);
             formData.append("price", price);
             formData.append("image", image);
-            formData.append("video", video);
 
 
             let res = await axios.post(
-                "http://localhost:8080/api/course/createCourse",
+                "https://udemy-clone-ujno.onrender.com/api/course/createCourse",
                 formData,
-                {withCredentials:true}
+                { withCredentials: true },
             );
 
-            alert('course created')
+            // alert('course created')
             setTitle('')
             setDescription("");
             setPrice("");
@@ -39,14 +37,14 @@ const CreateCourse = () => {
 
             navigate('/')
         } catch (error) {
-            alert("First Login then create course!");
-            navigate('/login')
+            // alert("First Login then create course!");
+            // navigate('/login')
             console.log(error)
         }
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 mt-20">
+        <div className="min-h-screen flex md:items-center justify-center bg-gray-100 pt-5 pb-5">
             <form
                 onSubmit={createCourses}
                 className="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg space-y-5"
@@ -99,20 +97,6 @@ const CreateCourse = () => {
 
                 <div>
                     <label className="block text-sm font-medium text-gray-600 mb-1">
-                        Upload Video
-                    </label>
-                    <input
-                        type="file"
-                        placeholder="Upload Video"
-                        onChange={(e) => setVideo(e.target.files[0])}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
-                        accept="video/*"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1">
                         Price (₹)
                     </label>
                     <input
@@ -127,7 +111,7 @@ const CreateCourse = () => {
 
                 <button
                     type="submit"
-                    className="w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 transition duration-200"
+                    className="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-200"
                 >
                     Create Course
                 </button>
