@@ -12,7 +12,6 @@ app.use(express.json());
 app.use(cors({
     origin: "https://udemy-clone2003.vercel.app",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 // app.use(cors())
 app.use(cookieParser());
