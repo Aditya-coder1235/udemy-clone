@@ -6,13 +6,10 @@ const upload = require('../middleware/upload')
 const authorizeRoles = require('../middleware/roleMiddleware')
 
 router.post(
-    '/createCourse',
+    "/createCourse",
     authMiddleware,
     authorizeRoles("admin"),
-    upload.fields([
-        { name: 'image', maxCount: 1 },
-        { name: 'video', maxCount: 1 }
-    ]),
+    upload.single("image"),
     createCourse
 );
 

@@ -14,8 +14,8 @@ const courseSchema = new mongoose.Schema({
         type: String,
         default: 'https://www.thinknexttraining.com/images/DSA-Course-mob.jpg'
     },
-    video:{
-        type:String,
+    video: {
+        type: String,
     },
     price: {
         type: Number,

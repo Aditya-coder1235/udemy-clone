@@ -1,30 +1,21 @@
-const multer = require('multer')
-const fs = require('fs')
-const path = require('path');
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const multer = require("multer");
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        let uploadPath = 'uploads'
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+});
 
-        if (file.mimetype.startsWith('image')) {
-            uploadPath = 'uploads/image'
-        } else if (file.mimetype.startsWith('video')) {
-            uploadPath = 'uploads/video'
-        }
-
-        if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath, { recursive: true })
-        }
-
-        cb(null, uploadPath)
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "udemy-clone",
+        allowed_formats: ["jpg", "png", "jpeg"],
     },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname)
-    }
-})
+});
 
-const upload = multer({
-    storage
-})
+const upload = multer({ storage });
 
-module.exports = upload
+module.exports = upload;

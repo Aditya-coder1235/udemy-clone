@@ -1,36 +1,42 @@
 const Course=require('../models/courseSchema');
 
+
 exports.createCourse = async (req, res) => {
     try {
         const { title, description, price } = req.body;
+        console.log("BODY:", req.body);
+        console.log("FILE:", req.file);
+        console.log("USER:", req.user);
 
-        if (!req.files || !req.files.image || !req.files.video) {
-            return res.status(400).json({ message: "Image and video required" });
+
+        if (!title || !description || !price) {
+            return res.status(400).json({ message: "All fields are required" });
         }
 
-        const imageFile = req.files.image[0];
-        const videoFile = req.files.video[0];
+        if (!req.file) {
+            return res.status(400).json({ message: "Image is required" });
+        }
 
-        const imageUrl = `/uploads/image/${imageFile.filename}`;
-        const videoUrl = `/uploads/video/${videoFile.filename}`;
-
-        const course = new Course({
+        const course = await Course.create({
             title,
             description,
             price,
-            image: imageUrl,
-            video: videoUrl,
-            owner: req.user.id
+            image: req.file.path, 
+            owner: req.user.id,  
         });
 
-        await course.save();
-
-        res.status(201).json({ message: "Course created successfully" });
+        res.status(201).json({
+            success: true,
+            message: "Course created successfully",
+            course,
+        });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: error.message });
+        console.error("Create course error:", error);
+        res.status(500).json({ message: "Server Error" });
     }
 };
+
+
 
 exports.getCourseUsingInput=async(req,res)=>{
     try {
